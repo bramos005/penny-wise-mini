@@ -1,12 +1,12 @@
 "use client";
 import { Sidebar } from "@/app/ui-components/Sidebar";
 import { BudgetForm } from "./budgetForm";
-import { BudgetCards } from "./BudgetCards";
+import { BudgetTable } from "./BudgetTable";
 import { useEffect, useState } from "react";
 import { getBudget } from "@/app/utils/getBudget";
 import { Budget } from "@prisma/client";
-import { BudgetPie } from "./budgetCharts/BudgetPie";
-import { BudgetBar } from "./budgetCharts/BudgetBar";
+import { BudgetPie } from "../overview/budgetCharts/BudgetPie";
+import { BudgetBar } from "../overview/budgetCharts/BudgetBar";
 export default function BudgetSetup() {
   const [hasBudget, setHasBudget] = useState<boolean>(true);
   const [submitted, setSubmitted] = useState<boolean>(true);
@@ -47,7 +47,7 @@ export default function BudgetSetup() {
               className={`${isActive ? "opacity-30" : "opacity-100"} ${
                 hasBudget ? "" : ""
               } flex transition-all duration-300`}>
-              <BudgetCards
+              <BudgetTable
                 setBudgets={setBudgets}
                 budgets={budgets}
                 toggleActive={toggleActive}

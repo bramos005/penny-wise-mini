@@ -13,7 +13,7 @@ interface Props {
   setSubmitted: (submitted: boolean) => void;
 }
 
-export function BudgetCards({
+export function BudgetTable({
   setBudgets,
   budgets,
   hasBudget,
