@@ -1,0 +1,16 @@
+import { Budget } from "@prisma/client";
+
+export const getBudgetBarValues = (budgets: Budget[]) => {
+    const barValues = budgets.map((budget: Budget) => {
+        let { name, amount, frequency } = budget;
+        if (frequency === "weekly") {
+            amount = amount * 4;
+        }
+        return {
+            name,
+            amount
+        };
+    });
+ 
+    return barValues;
+}

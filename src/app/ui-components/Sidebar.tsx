@@ -15,15 +15,15 @@ export function Sidebar() {
   useEffect(() => {
     if (!aosInitialized) {
       AOS.init({
-        // Your AOS configuration options here
+      
       });
-      setAOSInitialized(true); // Set the flag to indicate initialization
+      setAOSInitialized(true); 
     }
   }, []);
 
   return (
-    <div>
-      <div className="bg-custom-white flex flex-col w-60  p-5 h-screen ">
+    <div className="flex ">
+      <div className="bg-custom-white flex flex-col w-60  p-5 h-screen fixed ">
         <Logo />
         <h2 className="mt-7 text-custom-gray mb-3">MAIN MENU</h2>
         <div>

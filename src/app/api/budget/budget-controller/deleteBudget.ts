@@ -1,9 +1,9 @@
 import prisma from "@/app/db";
 
-export default async (req: Request) => {
+export default async function deleteBudget(req: Request) {
   try {
-      const { id } = await req.json();
-     
+    const { id } = await req.json();
+
     const deleteBudget = await prisma.budget.delete({
       where: {
         id: id,
@@ -21,4 +21,4 @@ export default async (req: Request) => {
       status: 500,
     });
   }
-};
+}

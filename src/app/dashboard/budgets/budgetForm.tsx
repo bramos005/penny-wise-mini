@@ -3,6 +3,7 @@ import { disconnect } from "process";
 import { Budget } from "@prisma/client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { fetchUtil } from "@/app/utils/fetch";
+import Aos from "aos";
 interface budgetFormProps {
   isActive: boolean;
   toggleActive: () => void;
@@ -14,24 +15,23 @@ interface budgetFormProps {
   setHasBudget: (hasBudget: boolean) => void;
 }
 
-export function BudgetForm({
+export  function BudgetForm({
   isActive,
   toggleActive,
-  budgets,
-  setBudgets,
   setSubmitted,
   submitted,
-  hasBudget,
   setHasBudget,
 }: budgetFormProps) {
-  const [budgetName, setBudgetName] = useState("");
-  const [budgetAmount, setBudgetAmount] = useState("");
-
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("selectCategory");
+  const [frequency, setFrequency] = useState("selectFrequency");
+  
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "0") {
-      setBudgetAmount("");
+      setAmount("");
     } else {
-      setBudgetAmount(e.target.value);
+      setAmount(e.target.value);
     }
   };
 
@@ -43,22 +43,23 @@ export function BudgetForm({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: budgetName, amount: budgetAmount }),
+      body: JSON.stringify({ name, amount, category, frequency }),
     });
 
     setSubmitted(!submitted);
     setHasBudget(true);
-    setBudgetAmount("");
-    setBudgetName("");
+    setAmount("");
+    setName("");
+    setCategory("selectCategory");
     toggleActive();
     console.log(newBudget);
   };
   return (
     <div
-      data-aos="fade-right"
+     data-aos="flip-left"
       className={` ${
         isActive ? "flex" : "hidden"
-      }   flex-col items-center justify-center h-fit border-2 p-5 shadow-xl  rounded-md  bg-white `}>
+      }   flex-col items-center justify-center h-fit border-2 p-5 shadow-xl    rounded-md  bg-white z-20000`}>
       <button onClick={toggleActive}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,10 +78,44 @@ export function BudgetForm({
         className="flex flex-col"
         aria-label="Add Budget Form"
         onSubmit={handleSubmit}>
+        <label htmlFor="frequency"></label>
+        <select
+          onChange={(e) => setFrequency(e.target.value)}
+          value={frequency}
+          className={` p-2 border-2 rounded-md w-72 mb-7 ${
+            frequency === "selectFrequency" ? "text-custom-gray" : ""
+          }`}>
+          <option value="selectFrequency">Select A Frequency</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+
+        <label htmlFor="category"></label>
+        <select
+          onChange={(e) => setCategory(e.target.value)}
+          value={category}
+          className={` p-2 border-2 rounded-md w-72 mb-7 ${
+            category === "selectCategory" ? "text-custom-gray" : ""
+          }`}
+          id="category"
+          name="category"
+          required>
+          <option className="text-custom-white" value="selectCategory" disabled>
+            Select A Category
+          </option>
+          <option value="savings&investments">Savings / Investments</option>
+          <option value="housing">Housing </option>
+          <option value="food">Food</option>
+          <option value="shopping">Shopping</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="transportation">Transportation</option>
+          <option value="education">Education</option>
+          <option value="miscellaneous">Miscellaneous</option>
+        </select>
         <label htmlFor="name"></label>
         <input
-          onChange={(e) => setBudgetName(e.target.value)}
-          value={budgetName}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
           className=" p-2 border-2 rounded-md w-72 mb-7"
           placeholder="Budget Name"
           id="name"
@@ -91,7 +126,7 @@ export function BudgetForm({
 
         <label className="mb-2" htmlFor="amount"></label>
         <input
-          value={budgetAmount}
+          value={amount}
           onChange={handleAmountChange}
           className=" p-2 border-2 rounded-md w-72  mb-7"
           placeholder="$ Budget Amount"

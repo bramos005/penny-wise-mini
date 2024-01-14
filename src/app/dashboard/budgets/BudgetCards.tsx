@@ -1,7 +1,8 @@
 "use client";
 import { Budget } from "@prisma/client";
-import { FormEvent, useEffect } from "react";
+import { useEffect } from "react";
 import { fetchUtil } from "@/app/utils/fetch";
+
 interface Props {
   setBudgets: (budgets: Budget[]) => void;
   budgets: Budget[];
@@ -31,74 +32,90 @@ export function BudgetCards({
     };
     getBudgets();
   }, [submitted]);
+
   useEffect(() => {
     if (budgets.length === 0) {
       setHasBudget(false);
     }
-  }, []);
+  }, [budgets.length]);
 
-  const handleDelete = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleDelete = async (e: any) => {
     const svgElement = (e.target as HTMLElement).closest("svg");
     try {
       if (svgElement) {
         const id = svgElement.dataset.id;
         console.log(id);
-        const deleted = await fetchUtil("/api/budget", {
+        await fetchUtil("/api/budget", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: id }),
         });
+        setSubmitted(!submitted);
       }
-      setSubmitted(!submitted);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div
-      className={`${hasBudget ? "flex" : "hidden"} flex-col  gap-5`}
-      onClick={handleDelete}>
-      <table className="w-96 min-h-fit  shadow-lg rounded-md bg-custom-white">
-        <thead>
+    <div className={`${hasBudget ? "flex" : "hidden"} flex-col gap-8 p-4 animate-fade-in-down`}>
+      <h2 className="text-2xl text-center font-semibold text-gray-700">Adjust your Budgets</h2>
+      <table className="w-8/12 divide-y divide-gray-300 shadow-lg rounded-lg overflow-hidden bg-white">
+        <thead className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
           <tr>
-            <th>Category</th>
-            <th>Budget</th>
-            <th>Delete</th>
+            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+              Name
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+              Budget
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+              Category
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider" >
+              Frequency
+            </th>
+            <th className="px-6 py-3 text-right">
+              <span className="sr-only">Delete</span>
+            </th>
           </tr>
         </thead>
-        <tbody className="">
-          {budgets.map((budget) => {
-            return (
-              <tr className="bg-white border  rounded-md" key={budget.id}>
-                <td className="text-center capitalize">
-                  {budget.name.toLowerCase()}
-                </td>
-                <td className="text-center ">${budget.amount}</td>
-                <td className="">
-                  <svg
-                    data-id={budget.id}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-6 h-6 m-auto cursor-pointer hover:scale-110 hover:text-custom-blue transition-all duration-500 ">
-                    <path
-                      fillRule="evenodd"
-                      d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </td>
-              </tr>
-            );
-          })}
+        <tbody className="divide-y divide-gray-200">
+          {budgets.map((budget) => (
+            <tr key={budget.id} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {budget.name}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                ${budget.amount}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {budget.category}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {budget.frequency}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <svg
+                  data-id={budget.id}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 cursor-pointer hover:text-red-600 transition-colors duration-300"
+                  onClick={handleDelete}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-6">
         <button
           onClick={toggleActive}
-          type="submit"
-          className="bg-custom-blue rounded-md text-white p-2 cursor-pointer hover:bg-blue-500 hover:scale-110 transition-all duration-500">
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300">
           Add A Budget
         </button>
       </div>

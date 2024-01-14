@@ -1,27 +1,26 @@
 import prisma from "@/app/db";
-import { NextApiRequest, NextApiResponse } from "next";
-
-export default async (req: Request) => {
+import { Budget } from "@prisma/client";
+export default async function createBudget(req: Request) {
   try {
-    const { name, amount }  = await req.json();
+    const { name, amount, category, frequency } = await req.json();
     const newBudget = await prisma.budget.create({
       data: {
-        name: name,
-        amount: Number(amount),
+        name,
+        amount: parseFloat(amount),
+        category,
+        frequency,
       },
     });
-    return (
-      new Response(
-        JSON.stringify({ budgetCreated: { name: name,amount: amount } })
-      ,
+    return new Response(
+      JSON.stringify({ budgetCreated: { frequency, category, name, amount } }),
       {
         status: 200,
       }
-    ))
-  } catch (err:any) {
+    );
+  } catch (err: any) {
     console.error("Error creating Budget:", err);
     return new Response(JSON.stringify({ err: err.toString() }), {
       status: 500,
     });
   }
-};
+}

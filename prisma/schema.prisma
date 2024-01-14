@@ -13,5 +13,7 @@ datasource db {
 model Budget {
   id String @id @default(cuid())
   name String @unique
-  amount Int
+  amount Float
+  category String @default("miscellaneous")
+  frequency String @default("monthly")
 }

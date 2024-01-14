@@ -1,7 +1,7 @@
 import prisma from "@/app/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: Request) => {
+export default async function getBudgets(req: Request) {
   try {
     const budgets = await prisma.budget.findMany();
     return new Response(JSON.stringify(budgets), {
@@ -10,7 +10,7 @@ export default async (req: Request) => {
   } catch (err: any) {
     console.error("Error fetching budgets:", err);
     return new Response(JSON.stringify({ err: err.toString() }), {
-      status: 500
+      status: 500,
     });
   }
-};
+}
