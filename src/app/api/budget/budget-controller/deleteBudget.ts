@@ -1,4 +1,4 @@
-import prisma from "@/app/db";
+import {prisma} from "@/app/db";
 
 export default async function deleteBudget(req: Request) {
   try {

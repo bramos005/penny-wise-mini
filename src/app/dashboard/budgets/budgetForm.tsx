@@ -1,8 +1,9 @@
 "use client";
 import { disconnect } from "process";
 import { Budget } from "@prisma/client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { fetchUtil } from "@/app/utils/fetch";
+import { useUser } from "@clerk/nextjs";
 import Aos from "aos";
 interface budgetFormProps {
   isActive: boolean;
@@ -26,7 +27,9 @@ export  function BudgetForm({
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("selectCategory");
   const [frequency, setFrequency] = useState("selectFrequency");
-  
+  const [userId ,setUserid] = useState("")
+  const { user } = useUser();
+
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "0") {
       setAmount("");
@@ -36,23 +39,26 @@ export  function BudgetForm({
   };
 
   const handleSubmit = async (e: FormEvent) => {
-    const form = e.target as HTMLFormElement;
+
     e.preventDefault();
-    const newBudget = await fetchUtil("/api/budget", {
+    if (user) {
+      const externalId = user.id;
+      const newBudget = await fetchUtil("/api/budget", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, amount, category, frequency }),
+      body: JSON.stringify({ name, amount, category, frequency , externalId}),
     });
-
+    }
+    
     setSubmitted(!submitted);
     setHasBudget(true);
     setAmount("");
     setName("");
     setCategory("selectCategory");
     toggleActive();
-    console.log(newBudget);
+    ;
   };
   return (
     <div
@@ -85,7 +91,7 @@ export  function BudgetForm({
           className={` p-2 border-2 rounded-md w-72 mb-7 ${
             frequency === "selectFrequency" ? "text-custom-gray" : ""
           }`}>
-          <option value="selectFrequency">Select A Frequency</option>
+          <option value="selectFrequency"  disabled>Select A Frequency</option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </select>

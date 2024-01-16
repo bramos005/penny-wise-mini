@@ -26,7 +26,10 @@ interface Data {
 export function BudgetBar({ budgets }: Props) {
   const [data, setData] = useState<Data[]>();
   useEffect(() => {
-    setData(getBudgetBarValues(budgets).sort((a, b) => a.amount - b.amount));
+    if (budgets) {
+      setData(getBudgetBarValues(budgets)?.sort((a, b) => a.amount - b.amount));
+    }
+    
   }, [budgets]);
 
   const CustomTooltip = ({ active, payload }: any) => {

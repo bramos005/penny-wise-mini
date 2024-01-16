@@ -2,7 +2,7 @@
 import { Budget } from "@prisma/client";
 import { useEffect } from "react";
 import { fetchUtil } from "@/app/utils/fetch";
-
+import { useUser } from "@clerk/nextjs";
 interface Props {
   setBudgets: (budgets: Budget[]) => void;
   budgets: Budget[];
@@ -22,29 +22,36 @@ export function BudgetTable({
   submitted,
   setSubmitted,
 }: Props) {
+console.log(budgets)
+  const { user } = useUser();
   useEffect(() => {
     const getBudgets = async () => {
-      const [newBudgets] = await fetchUtil("/api/budget");
-      if (newBudgets.length === 0) {
-        setHasBudget(false);
+      if (user) {
+        const externalId = user.id;
+        console.log(externalId)
+        const [newBudgets] = await fetchUtil(`/api/budget?externalId=${encodeURIComponent(externalId)}`);
+        setBudgets(newBudgets);
       }
-      setBudgets(newBudgets);
+      
+    
     };
     getBudgets();
-  }, [submitted]);
+  }, [user, submitted]);
 
   useEffect(() => {
-    if (budgets.length === 0) {
-      setHasBudget(false);
+    if (budgets.length > 0) {
+      setHasBudget(true);
+    } else {
+      setHasBudget(false)
     }
-  }, [budgets.length]);
+  }, [budgets]);
 
   const handleDelete = async (e: any) => {
     const svgElement = (e.target as HTMLElement).closest("svg");
     try {
       if (svgElement) {
         const id = svgElement.dataset.id;
-        console.log(id);
+        ;
         await fetchUtil("/api/budget", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -58,60 +65,71 @@ export function BudgetTable({
   };
 
   return (
-    <div className={`${hasBudget ? "flex" : "hidden"} flex-col gap-8 p-4 animate-fade-in-down`}>
-      <h2 className="text-2xl text-center font-semibold text-gray-700">Adjust your Budgets</h2>
-      <table className="w-8/12 divide-y divide-gray-300 shadow-lg rounded-lg overflow-hidden bg-white">
-        <thead className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
-              Name
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
-              Budget
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
-              Category
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider" >
-              Frequency
-            </th>
-            <th className="px-6 py-3 text-right">
-              <span className="sr-only">Delete</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {budgets.map((budget) => (
-            <tr key={budget.id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {budget.name}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                ${budget.amount}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {budget.category}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {budget.frequency}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <svg
-                  data-id={budget.id}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6 cursor-pointer hover:text-red-600 transition-colors duration-300"
-                  onClick={handleDelete}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </td>
+    <div
+      className={`${
+      hasBudget ? "flex" : "hidden"
+      }  flex-col gap-8 p-4 animate-fade-in-down`}>
+      <h2 className="text-2xl text-center font-semibold text-gray-700">
+        Adjust your Budgets
+      </h2>
+      <div className="overflow-y-auto max-h-[20rem]">
+        <table className="w-8/12 divide-y divide-gray-300 shadow-lg rounded-lg  bg-white">
+          <thead className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Name
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Budget
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Category
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Frequency
+              </th>
+              <th className="px-6 py-3 text-right">
+                <span className="sr-only">Delete</span>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {budgets.map((budget) => (
+              <tr key={budget.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {budget.name.toLowerCase()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ${budget.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {budget.category}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {budget.frequency}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <svg
+                    data-id={budget.id}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 cursor-pointer hover:text-red-600 transition-colors duration-300"
+                    onClick={handleDelete}>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <div className="flex justify-center mt-6">
         <button
           onClick={toggleActive}

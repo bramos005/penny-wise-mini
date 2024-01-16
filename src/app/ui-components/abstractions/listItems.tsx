@@ -29,6 +29,23 @@ export const listItems: { icon: any; title: string }[] = [
     ),
     title: "Budgets",
   },
+  {
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-6 h-6">
+        <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+        <path
+          fillRule="evenodd"
+          d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z"
+          clipRule="evenodd"
+        />
+      </svg>
+    ),
+    title: "Income",
+  },
 
   {
     icon: (
@@ -41,23 +58,6 @@ export const listItems: { icon: any; title: string }[] = [
       </svg>
     ),
     title: "Statistics",
-  },
-
-  {
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="w-6 h-6">
-        <path
-          fillRule="evenodd"
-          d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-          clipRule="evenodd"
-        />
-      </svg>
-    ),
-    title: "Account",
   },
 ];
 
@@ -186,6 +186,10 @@ export const listItems: { icon: any; title: string }[] = [
       <path d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 0 1-3 0V6.75Z" />
     </svg>
     <p>Report</p>
+  </li>
+
+  <li>
+  
   </li>
   <li
     data-aos="flip-left"

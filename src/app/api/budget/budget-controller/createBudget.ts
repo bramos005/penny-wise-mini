@@ -1,14 +1,20 @@
-import prisma from "@/app/db";
+import { prisma } from "@/app/db";
 import { Budget } from "@prisma/client";
 export default async function createBudget(req: Request) {
   try {
-    const { name, amount, category, frequency } = await req.json();
+    const { name, amount, category, frequency, externalId } = await req.json();
     const newBudget = await prisma.budget.create({
       data: {
         name,
         amount: parseFloat(amount),
         category,
         frequency,
+        user: {
+          connect: {
+            externalId: externalId
+          }
+        }
+        
       },
     });
     return new Response(
