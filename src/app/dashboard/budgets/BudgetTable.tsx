@@ -1,8 +1,9 @@
 "use client";
 import { Budget } from "@prisma/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchUtil } from "@/app/utils/fetch";
 import { useUser } from "@clerk/nextjs";
+import Aos from "aos";
 interface Props {
   setBudgets: (budgets: Budget[]) => void;
   budgets: Budget[];
@@ -11,6 +12,8 @@ interface Props {
   toggleActive: () => void;
   submitted: boolean;
   setSubmitted: (submitted: boolean) => void;
+  isLoaded: boolean;
+  setIsLoaded: (isLoaded: boolean) => void;
 }
 
 export function BudgetTable({
@@ -21,22 +24,40 @@ export function BudgetTable({
   toggleActive,
   submitted,
   setSubmitted,
+  isLoaded,
+  setIsLoaded
 }: Props) {
-console.log(budgets)
+
   const { user } = useUser();
+
   useEffect(() => {
     const getBudgets = async () => {
       if (user) {
         const externalId = user.id;
         console.log(externalId)
         const [newBudgets] = await fetchUtil(`/api/budget?externalId=${encodeURIComponent(externalId)}`);
-        setBudgets(newBudgets);
+        setTimeout(() => {
+          setIsLoaded(true)
+        },0)
+        setBudgets(newBudgets); 
       }
       
     
     };
     getBudgets();
   }, [user, submitted]);
+
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
+
+
+  useEffect(() => {
+    if (isLoaded) {
+      Aos.refresh();
+    }
+  }, [isLoaded]);
 
   useEffect(() => {
     if (budgets.length > 0) {
@@ -67,7 +88,7 @@ console.log(budgets)
   return (
     <div
       className={`${
-      hasBudget ? "flex" : "hidden"
+     !isLoaded || !hasBudget ? "hidden" : "flex"
       }  flex-col gap-8 p-4 animate-fade-in-down`}>
       <h2 className="text-2xl text-center font-semibold text-gray-700">
         Adjust your Budgets

@@ -8,23 +8,36 @@ import { Budget } from "@prisma/client";
 import { NavBar } from "@/app/ui-components/NavBar";
 import { BudgetPie } from "../overview/budgetCharts/BudgetPie";
 import { BudgetBar } from "../overview/budgetCharts/BudgetBar";
+import Aos from "aos";
 
 
 export default function BudgetSetup() {
-  const [hasBudget, setHasBudget] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [hasBudget, setHasBudget] = useState<boolean>(true);
   const [submitted, setSubmitted] = useState<boolean>(true);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [budgets, setBudgets] = useState<Budget[] | []>([]);
   const toggleActive = () => {
     setIsActive(!isActive);
   };
+  useEffect(() => {
+    Aos.init()
+  },[])
+  useEffect(() => {
+    if (isLoaded) {
+      Aos.refresh();
+    }
+  }, [isLoaded]);
 
+  useEffect(() => {
+  
+} )
   
 
 
   const budgetAlloc = getBudget(budgets);
   return (
-    <div className="flex ">
+    <div className={`flex`}>
       <div>
         <Sidebar />
       </div>
@@ -36,7 +49,7 @@ export default function BudgetSetup() {
         </div>
         <div className="flex flex-col gap-2    mt-[-4rem]">
           <h1 className="text-3xl font-semibold text-gray-700">Budgets</h1>
-          <p className="text-custom-gray font-semibold">Plan, Track, Achieve</p>
+          <p className="text-custom-gray font-semibold">Plan, Track, Achieve.</p>
         </div>
         <div className=" flex mt-[-2.5rem] gap-20 flex-wrapitems-center"></div>
         <div
@@ -48,8 +61,10 @@ export default function BudgetSetup() {
               hasBudget ? "shadow-md bg-custom-white" : "w-[80vw]"
             } justify-center items-center mb-20 rounded-xl p-5   max-h-[55rem]`}>
             <div
-              className={`${isActive ? "opacity-30" : "opacity-100"}  flex transition-all  duration-300`}>
+              className={`${isActive || !hasBudget || !isLoaded ? "opacity-30" : "opacity-100"}  flex transition-all  duration-300`}>
               <BudgetTable
+                isLoaded={isLoaded}
+                setIsLoaded={setIsLoaded}
                 setBudgets={setBudgets}
                 budgets={budgets}
                 toggleActive={toggleActive}
@@ -61,18 +76,18 @@ export default function BudgetSetup() {
             </div>
             <div
               className={`${
-                hasBudget ? "hidden" : "opacity-100 "
-              } flex gap-3 flex-col  items-center transition-all duration-100 ease-in-out`}>
-              <h1 className="text-xl font-semibold text-gray-700">
+               !isLoaded || hasBudget  ? "hidden" : "opacity-100 "
+              } flex gap-7 flex-col  items-center transition-all duration-100 ease-in-out`}>
+              <h1 className="text-3xl font-semibold text-gray-700">
                 You currently have no budgets in place
               </h1>
               <button
                 onClick={toggleActive}
-                className="border p-2 bg-custom-blue text-white font-semibold  rounded-xl hover:scale-105 transition-all duration-500 ease-in-out">
-                Add a budget
+                className="border p-2 bg-custom-blue  text-lg text-white font-medium  rounded-xl   hover:bg-blue-500  ">
+                Add a Budget
               </button>
             </div>
-            <div className="flex flex-col absolute bottom0 z-[50000]">
+            <div className="flex flex-col absolute  z-[50000]">
               <BudgetForm
                 isActive={isActive}
                 toggleActive={toggleActive}
@@ -83,8 +98,8 @@ export default function BudgetSetup() {
                 setHasBudget={setHasBudget}
                 hasBudget={true}
               />
-            </div>{" "}
-          </div>{" "}
+            </div>
+          </div>
           <div
             className={` ${isActive ? "opacity-30" : ""} ${
               hasBudget ? "" : "hidden"

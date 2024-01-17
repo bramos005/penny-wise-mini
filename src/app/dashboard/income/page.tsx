@@ -8,6 +8,7 @@ export default function Income() {
   const [income, setIncome] = useState("0");
   const [showPopup, setShowPopup] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading,setIsLoading] = useState(true)
   const {user} = useUser();
    ;
   const handleFocus = () => {
@@ -34,7 +35,7 @@ export default function Income() {
       body: JSON.stringify({externalId,income})
     });
       }
-     
+    
       
   };
     useEffect(() => {
@@ -73,7 +74,7 @@ export default function Income() {
             </p>
             <p
               className={` ${
-                !isSubmitted ? "hidden" : "fixed"
+                !isSubmitted ? " hidden " : "fixed "
               } bottom-[-1rem] left-[17.8rem] text-custom-blue font-semibold`}>
               Submitted!
             </p>

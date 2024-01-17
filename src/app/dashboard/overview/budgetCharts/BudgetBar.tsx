@@ -40,8 +40,8 @@ export function BudgetBar({ budgets }: Props) {
           style={{
             backgroundColor: "white", // Slightly transparent white
             padding: "10px",
-            border: `1px solid #245EE7`, // Your primary color
-            color: "#245EE7", // Text color
+            border: `1px solid #9AA6B8`, // Your primary color
+            color: "#9AA6B8", // Text color
             boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
             borderRadius: "5px",
           }}>

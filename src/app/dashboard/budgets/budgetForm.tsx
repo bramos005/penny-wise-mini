@@ -16,7 +16,7 @@ interface budgetFormProps {
   setHasBudget: (hasBudget: boolean) => void;
 }
 
-export  function BudgetForm({
+export function BudgetForm({
   isActive,
   toggleActive,
   setSubmitted,
@@ -25,9 +25,9 @@ export  function BudgetForm({
 }: budgetFormProps) {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("selectCategory");
-  const [frequency, setFrequency] = useState("selectFrequency");
-  const [userId ,setUserid] = useState("")
+  const [category, setCategory] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [userId, setUserid] = useState("");
   const { user } = useUser();
 
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,35 +37,38 @@ export  function BudgetForm({
       setAmount(e.target.value);
     }
   };
+  
+  useEffect(() => {
+  Aos.refresh()
+},[isActive])
 
   const handleSubmit = async (e: FormEvent) => {
-
     e.preventDefault();
+
     if (user) {
       const externalId = user.id;
       const newBudget = await fetchUtil("/api/budget", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, amount, category, frequency , externalId}),
-    });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, amount, category, frequency, externalId }),
+      });
     }
-    
+
     setSubmitted(!submitted);
     setHasBudget(true);
     setAmount("");
     setName("");
     setCategory("selectCategory");
     toggleActive();
-    ;
   };
   return (
     <div
-     data-aos="flip-left"
+      data-aos="flip-left"
       className={` ${
         isActive ? "flex" : "hidden"
-      }   flex-col items-center justify-center h-fit border-2 p-5 shadow-xl    rounded-md  bg-white z-20000`}>
+      }   flex-col items-center justify-center h-fit border-2 p-5 shadow-xl   rounded-md  bg-white z-20000`}>
       <button onClick={toggleActive}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +83,7 @@ export  function BudgetForm({
         </svg>
       </button>
       <h1 className="text-2xl mb-10 mt-10 font-bold">Add a Budget</h1>
+
       <form
         className="flex flex-col"
         aria-label="Add Budget Form"
@@ -89,9 +93,11 @@ export  function BudgetForm({
           onChange={(e) => setFrequency(e.target.value)}
           value={frequency}
           className={` p-2 border-2 rounded-md w-72 mb-7 ${
-            frequency === "selectFrequency" ? "text-custom-gray" : ""
-          }`}>
-          <option value="selectFrequency"  disabled>Select A Frequency</option>
+            frequency === "" ? "text-custom-gray" : ""
+          }`} required>
+          <option value="" disabled>
+            Select A Frequency
+          </option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </select>
@@ -101,12 +107,12 @@ export  function BudgetForm({
           onChange={(e) => setCategory(e.target.value)}
           value={category}
           className={` p-2 border-2 rounded-md w-72 mb-7 ${
-            category === "selectCategory" ? "text-custom-gray" : ""
+            category === "" ? "text-custom-gray" : ""
           }`}
           id="category"
           name="category"
           required>
-          <option className="text-custom-white" value="selectCategory" disabled>
+          <option className="text-custom-white" value="" disabled>
             Select A Category
           </option>
           <option value="savings&investments">Savings / Investments</option>
