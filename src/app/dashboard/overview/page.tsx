@@ -14,10 +14,15 @@ import { getBudget } from "@/app/utils/getBudget";
 import Aos from "aos";
 
 export default function Overview() {
+  const [menu, setMenu] = useState(true);
   const [hasBudget, setHasBudget] = useState(false);
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [income, setIncome] = useState(10000)
+  const [income, setIncome] = useState(10000);
+
+  const handleToggle = () => {
+    setMenu(true);
+  };
 
   const { user } = useUser();
   useEffect(() => {
@@ -28,7 +33,7 @@ export default function Overview() {
           `/api/budget?externalId=${encodeURIComponent(externalId)}`
         );
         setBudgets(newBudgets);
-        setIsLoaded(true)
+        setIsLoaded(true);
       }
     };
     getBudgets();
@@ -38,11 +43,8 @@ export default function Overview() {
     Aos.init();
   }, []);
 
-
-
   useEffect(() => {
     if (isLoaded) {
-
       Aos.refresh();
     }
   }, [isLoaded]);
@@ -54,20 +56,29 @@ export default function Overview() {
 
   return (
     <div className="flex">
-      <Sidebar />
+      <div  className="z-[10000000]">
+        <Sidebar />
+      </div>
+
+      
+
+
+      
 
       <div
         data-aos="zoom-in"
         data-aos-duration="10"
-        className={`${!isLoaded ? "hidden" : ""} flex flex-col w-[90vw] gap-16 p-6 ml-[15.5rem]`}>
+        className={`${
+          !isLoaded ? "hidden" : ""
+        } w-[100vw] flex flex-col  gap-16 p-6  900:ml-[15.5rem] `}>
         <div
-          className={`flex border-b justify-end ml-[-2rem]  mt-[-1rem] py-2`}>
+          className={`flex border-b justify-end  ml-[-2rem]  mt-[-1rem] py-2`}>
           <NavBar></NavBar>
         </div>
         <div>
           {!hasBudget && (
             <div
-              className={` flex font-semibold text-gray-700 text-3xl flex-col w-[80vw] h-[80vh] justify-center items-center fixed z-[30000]`}>
+              className={` flex font-semibold text-gray-700  text-3xl flex-col  h-[80vh] text-center  justify-center items-center fixed z-[30000] 900:w-[80vw]`}>
               <p>Insufficient data for an overview.</p>
               <p>Please add budgets to unlock insights.</p>
             </div>
@@ -82,20 +93,28 @@ export default function Overview() {
         </div>
 
         {hasBudget && (
-          <div className={` flex items-center flex-wrap  gap-16`}>
-            <div className="border bg-custom-white rounded-xl   shadow-black ">
+          <div className={`flex items-center  flex-wrap  gap-16`}>
+            <div className=" w-[90vw] md:w-[39rem] border bg-custom-white rounded-xl   shadow-black ">
               <BudgetBar budgets={budgets} />
             </div>
-            <div className="border bg-custom-white rounded-xl w-[28rem]  shadow-black">
+            <div className="border bg-custom-white rounded-xl w-[90vw]  shadow-black md:w-[28rem]">
               <BudgetPie budgets={budgets} />
             </div>
-            <div className="flex items-center justify-center gap-20 flex-wrap">
-              <div className="border bg-custom-white rounded-xl   shadow-black ">
-                <IncomeVsBudget income={income} setIncome={setIncome} budgets={budgets} />
+            <div className="flex flex-col 1409:flex-row items-center  gap-20 flex-wrap">
+              <div className="w-[90vw] md:w-[39rem] border bg-custom-white rounded-xl   shadow-black ">
+                <IncomeVsBudget
+                  income={income}
+                  setIncome={setIncome}
+                  budgets={budgets}
+                />
               </div>
-              <div className="">
-                <p className="text-xl font-semibold text-gray-700">
-                  Your budgets take up <p className="text-custom-blue text-2xl inline-flex">{getPercentage(income,getBudget(budgets))}</p>% of your income
+              <div className="flex justify-center items-center">
+                <p className="text-xl self-center font-semibold text-gray-700">
+                  Your budgets take up{" "}
+                  <p className="text-custom-blue text-2xl inline-flex">
+                    {Math.round(getPercentage(income, getBudget(budgets)))}
+                  </p>
+                  % of your income
                 </p>
               </div>
             </div>

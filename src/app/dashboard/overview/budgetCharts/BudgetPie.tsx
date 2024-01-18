@@ -71,14 +71,14 @@ export function BudgetPie({ budgets }: BudgetProps) {
   ];
 
   return (
-    <div className="flex items-center">
-      <div className="h-96 w-full z-0 flex flex-col  p-5 items-center justify-center">
+    <div className="flex w-full items-center ">
+      <div className=" w-full z-0 flex flex-col  p-5 items-center justify-center">
         <h2 className="p-5 font-bold">Budgets By Category</h2>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
               data={data}
-              cx="50%" // Adjust the horizontal position of the Pie
+              cx="50%" 
               cy="50%"
               labelLine={false}
               outerRadius={100}

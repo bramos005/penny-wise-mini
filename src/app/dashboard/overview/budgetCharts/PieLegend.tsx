@@ -3,7 +3,7 @@ import { Dot } from "@/app/ui-components/Dot";
 ["#FF6B6B", "#4FD1C5", "#F6AD55", "#9F7AEA", "#68D391", "#FEB2B2", "#63B3ED"];
 export function PieLegend() {
   return (
-    <div className="flex text-sm gap-3 flex-col mr-5">
+    <div className="flex text-[7px] gap-3 flex-col mr-5 sm:text-sm">
       <div className="flex gap-2 items-center">
         <Dot color="bg-[#FF6B6A] "></Dot>
         <p>Savings/Investments</p>

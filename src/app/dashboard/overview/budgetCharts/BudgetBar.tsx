@@ -13,6 +13,7 @@ import {
   Legend,
   BarChart,
   Bar,
+  ResponsiveContainer,
 } from "recharts";
 
 interface Props {
@@ -29,7 +30,6 @@ export function BudgetBar({ budgets }: Props) {
     if (budgets) {
       setData(getBudgetBarValues(budgets)?.sort((a, b) => a.amount - b.amount));
     }
-    
   }, [budgets]);
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -55,7 +55,7 @@ export function BudgetBar({ budgets }: Props) {
   };
 
   return (
-    <div>
+    <div className="w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="p-5 font-bold">Monthly Budgets</h1>
         <div className="flex gap-5 pr-5">
@@ -65,24 +65,27 @@ export function BudgetBar({ budgets }: Props) {
           </div>
         </div>
       </div>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid stroke="#F1F4F8" horizontal={true} vertical={false} />
+          <XAxis axisLine={false} dataKey="name" tickMargin={10} tick={false} />
+          <YAxis axisLine={false} />
+          <Tooltip cursor={false} content={<CustomTooltip />} />
 
-      <BarChart
-        width={600}
-        height={300}
-        data={data}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-        <CartesianGrid stroke="#F1F4F8" horizontal={true} vertical={false} />
-        <XAxis axisLine={false} dataKey="name" tickMargin={10} tick={false} />
-        <YAxis axisLine={false} />
-        <Tooltip cursor={false} content={<CustomTooltip />} />
-
-        <Bar
-          dataKey="amount"
-          fill="#245EE7"
-          maxBarSize={30}
-          radius={[5, 5, 0, 0]}
-        />
-      </BarChart>
+          <Bar
+            
+            dataKey="amount"
+            fill="#245EE7"
+            maxBarSize={30}
+            radius={[5, 5, 0, 0]}
+            
+          />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

@@ -16,5 +16,7 @@
  .cl-formButtonPrimary {
     color:#245EE7;
  }
-
+.cl-userButtonPopoverCard {
+    z-index: 100000000000000000000;
+}
  

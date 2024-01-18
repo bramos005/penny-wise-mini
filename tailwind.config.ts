@@ -20,6 +20,14 @@ const config: Config = {
         "dash-gray": "#49586D",
         "icon-gray": "#E5E8EF"
       },
+      screens: {
+        "900": "900px",
+        "1409": "1409px",
+        "500": "500px",
+        "623": "623px",
+        "770": "770px",
+        "1358": "1358px"
+      }
     },
   },
   plugins: [],

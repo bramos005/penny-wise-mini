@@ -38,17 +38,17 @@ export default function BudgetSetup() {
   const budgetAlloc = getBudget(budgets);
   return (
     <div className={`flex`}>
-      <div>
+      <div className="z-[10000]">
         <Sidebar />
       </div>
 
-      <div data-aos="zoom-in" className="flex flex-col ml-[17rem] w-screen h-[90vh]  gap-y-10">
+      <div data-aos="zoom-in" className="flex flex-col w-screen h-[90vh]  gap-y-10 900:ml-[17rem]">
  
         <div className=" flex border-b justify-end mb-10 ml-[-2rem] py-3 mr-3">
           <NavBar></NavBar>
         </div>
-        <div className="flex flex-col gap-2    mt-[-4rem]">
-          <h1 className="text-3xl font-semibold text-gray-700">Budgets</h1>
+        <div className="flex flex-col gap-2    mt-[-4rem] ml-7 sm:">
+          <h1 className="text-3xl font-semibold text-gray-700  sm:">Budgets</h1>
           <p className="text-custom-gray font-semibold">Plan, Track, Achieve.</p>
         </div>
         <div className=" flex mt-[-2.5rem] gap-20 flex-wrapitems-center"></div>
@@ -58,7 +58,7 @@ export default function BudgetSetup() {
           } items-center  flex-wrap gap-3 `}>
           <div
             className={`flex flex-col gap-3  ${
-              hasBudget ? "shadow-md bg-custom-white" : "w-[80vw]"
+              hasBudget ? "shadow-md bg-custom-white" : ""
             } justify-center items-center mb-20 rounded-xl p-5   max-h-[55rem]`}>
             <div
               className={`${isActive || !hasBudget || !isLoaded ? "opacity-30" : "opacity-100"}  flex transition-all  duration-300`}>
@@ -77,8 +77,8 @@ export default function BudgetSetup() {
             <div
               className={`${
                !isLoaded || hasBudget  ? "hidden" : "opacity-100 "
-              } flex gap-7 flex-col  items-center transition-all duration-100 ease-in-out`}>
-              <h1 className="text-3xl font-semibold text-gray-700">
+              } flex gap-7 flex-col justify-center items-center transition-all duration-100 text-center ease-in-out w-[93vw] 900:w-[60vw] lg:w-[70vw] xl:w-[80vw] `}>
+              <h1 className=" flex text-3xl   font-semibold text-gray-700 sm: justify-center">
                 You currently have no budgets in place
               </h1>
               <button

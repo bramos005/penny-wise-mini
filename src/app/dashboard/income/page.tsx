@@ -8,9 +8,8 @@ export default function Income() {
   const [income, setIncome] = useState("0");
   const [showPopup, setShowPopup] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading,setIsLoading] = useState(true)
-  const {user} = useUser();
-   ;
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useUser();
   const handleFocus = () => {
     setShowPopup(true);
     setIsSubmitted(false);
@@ -19,46 +18,46 @@ export default function Income() {
     setShowPopup(false);
   };
   const handleSubmit = async (e: FormEvent) => {
-      e.preventDefault();
-      setIncome(income)
+    e.preventDefault();
+    setIncome(income);
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
     }, 3000);
-      if (user) {
-           const externalId = user.id
-    const setIncome = await fetchUtil("/api/income", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({externalId,income})
-    });
-      }
-    
-      
+    if (user) {
+      const externalId = user.id;
+      const setIncome = await fetchUtil("/api/income", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ externalId, income }),
+      });
+    }
   };
-    useEffect(() => {
-        const getIncome = async () => {
-            if (user) {
-                    const externalId = user.id 
-               const [retrievedIncome] = await fetchUtil(`/api/income?externalId=${encodeURIComponent(externalId)}`)
-            console.log(retrievedIncome);
-            setIncome(retrievedIncome.income); 
-            }
-            
-        }
-        
-        getIncome();
-    },[])
+  useEffect(() => {
+    const getIncome = async () => {
+      if (user) {
+        const externalId = user.id;
+        const [retrievedIncome] = await fetchUtil(
+          `/api/income?externalId=${encodeURIComponent(externalId)}`
+        );
+        console.log(retrievedIncome);
+        setIncome(retrievedIncome.income);
+      }
+    };
 
+    getIncome();
+  }, []);
 
   return (
-    <div className="flex">
-      <Sidebar />
+    <div className="flex ">
+      <div className="z-[10000]">
+        <Sidebar />
+      </div>
       <div
         data-aos="zoom-in"
-        className="flex flex-col w-screen  p-6 ml-[15.5rem]  ">
+        className="flex flex-col w-screen   p-6 900:ml-[15.5rem]  ">
         <div className=" flex border-b justify-end ml-[-2rem]  mt-[-1rem] py-2 ">
           <NavBar></NavBar>
         </div>

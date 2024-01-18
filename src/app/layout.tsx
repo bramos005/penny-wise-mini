@@ -3,6 +3,7 @@ import { dark } from "@clerk/themes";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
