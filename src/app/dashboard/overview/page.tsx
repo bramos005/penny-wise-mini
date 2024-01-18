@@ -29,11 +29,16 @@ export default function Overview() {
     const getBudgets = async () => {
       if (user) {
         const externalId = user.id;
-        const [newBudgets] = await fetchUtil(
+        try {
+           const [newBudgets] = await fetchUtil(
           `/api/budget?externalId=${encodeURIComponent(externalId)}`
         );
         setBudgets(newBudgets);
         setIsLoaded(true);
+        } catch (err) {
+          console.error(err);
+        }
+       
       }
     };
     getBudgets();

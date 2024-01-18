@@ -33,7 +33,9 @@ export default function Statistics() {
 
   useEffect(() => {
     const getIncome = async () => {
-      if (user) {
+
+      try {
+        if (user) {
         const externalId = user.id;
         const [retrievedIncome] = await fetchUtil(
           `/api/income?externalId=${encodeURIComponent(externalId)}`
@@ -41,6 +43,10 @@ export default function Statistics() {
 
         setIncome(retrievedIncome.income);
       }
+      } catch (err) {
+        console.error(err)
+      }
+      
     };
 
     getIncome();
@@ -48,32 +54,40 @@ export default function Statistics() {
 
   useEffect(() => {
     const getBudgets = async () => {
-      if (user) {
-        const externalId = user.id;
-        const [newBudgets] = await fetchUtil(
-          `/api/budget?externalId=${encodeURIComponent(externalId)}`
-        );
-        console.log(newBudgets);
-        setBudgets(newBudgets);
+      try {
+        if (user) {
+          const externalId = user.id;
+          const [newBudgets] = await fetchUtil(
+            `/api/budget?externalId=${encodeURIComponent(externalId)}`
+          );
+          console.error(newBudgets);
+          setBudgets(newBudgets);
+        }
+      } catch (err) {
+        console.error(err);
       }
     };
     getBudgets();
   }, [user]);
 
   const generateReport = async () => {
-    const report = await fetchUtil("/api/report", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ income, budgets }),
-    });
-    return report;
+    try {
+      const report = await fetchUtil("/api/report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ income, budgets }),
+      });
+      return report;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleClick = async () => {
     setIsGenerating(true);
-    const [res] = await generateReport();
+    const [res]:any = await generateReport();
     console.log(res);
     setTimeout(() => {
       setReport(res.report);
@@ -83,7 +97,8 @@ export default function Statistics() {
 
   return (
     <div className={`flex`}>
-      <div className={`${isGenerating ? "pointer-events-none" : ""}  z-[10000] `}>
+      <div
+        className={`${isGenerating ? "pointer-events-none" : ""}  z-[10000] `}>
         <Sidebar />
       </div>
 
