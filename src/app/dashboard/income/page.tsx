@@ -48,7 +48,7 @@ export default function Income() {
     };
 
     getIncome();
-  }, []);
+  }, [user]);
 
   return (
     <div className="flex ">

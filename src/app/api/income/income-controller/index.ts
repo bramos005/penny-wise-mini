@@ -1,6 +1,8 @@
 import update from "./updateIncome";
 import read from "./getIncome";
-export default {
+const income =  {
     update,
     read
 };
+
+export default income;

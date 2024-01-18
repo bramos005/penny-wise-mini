@@ -24,7 +24,7 @@ export async function handler(req: Request) {
   } catch (err) {
     console.error("hello");
     console.error((err as Error).message);
-    return new Response(JSON.stringify({})), { status: 400 };
+    return new Response(JSON.stringify({}), { status: 400 })
   }
 
   const eventType: EventType = event.type;
@@ -65,7 +65,7 @@ export async function handler(req: Request) {
     });
   }
 
-  return new Response(JSON.stringify({}), { status: 200 });
+  return new Response(null, { status: 200 });
 }
 type EventType = "user.created" | "user.deleted" | "*";
 type Event = {
