@@ -66,7 +66,7 @@ export function Sidebar() {
       </div>
       <div className={`${toggle ? "" : "hidden"}  900:flex`}>
         <div className="bg-custom-white flex flex-col w-60  p-5 h-screen fixed ">
-          <Logo />
+          <Logo color={"text-custom-blue"} icon={"text-gray-700"} />
           <h2 className="mt-7 text-custom-gray mb-3">MAIN MENU</h2>
           <div>
             <div>
@@ -94,12 +94,12 @@ export function Sidebar() {
           </div>
 
           <div>
-            <h2 className="mt-7 text-custom-gray mb-3">BUCKETS CATEGORY</h2>
+            <h2 className="mt-7 text-custom-gray mb-3">Coming soon...</h2>
 
             <ul className="flex flex-col gap-4">
               <li className="flex items-center gap-2">
                 <Dot color="bg-green-400" />
-                <p>Incomes</p>
+                <p>Link your bank</p>
               </li>
 
               <li className="flex items-center gap-2">

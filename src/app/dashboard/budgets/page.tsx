@@ -42,13 +42,13 @@ export default function BudgetSetup() {
         <Sidebar />
       </div>
 
-      <div data-aos="zoom-in" className="flex flex-col w-screen h-[90vh]  gap-y-10 900:ml-[17rem]">
+      <div data-aos="zoom-in" className="flex flex-col w-screen h-[90vh]  gap-y-10 900:ml-[17rem] ">
  
-        <div className=" flex border-b justify-end mb-10 ml-[-2rem] py-3 mr-3">
+        <div className=" flex border-b justify-end mb-10 ml-[-2rem] py-3 mr-3 900:w-[75vw] 1280:w-[79vw] 1300:w-[80vw] 1409:w-[81vw] 1500:w-[83vw]">
           <NavBar></NavBar>
         </div>
-        <div className="flex flex-col gap-2    mt-[-4rem] ml-7 sm:">
-          <h1 className="text-3xl font-semibold text-gray-700  sm:">Budgets</h1>
+        <div className="flex flex-col gap-2 ml-8   mt-[-4rem] 900:ml-0  ">
+          <h1 className="text-3xl font-semibold text-gray-700  s">Budgets</h1>
           <p className="text-custom-gray font-semibold">Plan, Track, Achieve.</p>
         </div>
         <div className=" flex mt-[-2.5rem] gap-20 flex-wrapitems-center"></div>

@@ -1,14 +1,18 @@
 import Image from "next/image";
 
-export  function Logo() {
+interface Props {
+  color: string
+  icon: string
+}
+export  function Logo({color,icon}:Props) {
   return (
       <div className="flex gap-2 items-center">
-          
-      <svg
+      {icon !== "text-white" && (
+         <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="w-10 h-10 text-custom-blue">
+        className={`w-10 h-10 ${color}`}>
         <path d="M12 7.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
         <path
           fillRule="evenodd"
@@ -17,8 +21,10 @@ export  function Logo() {
         />
         <path d="M2.25 18a.75.75 0 0 0 0 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 0 0-.75-.75H2.25Z" />
           </svg>
+        )} 
+     
           
-          <p className="font-bold text-xl text-custom-blue">Penny Wise</p>
+          <p className={`font-bold text-xl ${icon}`}>Penny Wise</p>
     </div>
   );
 }

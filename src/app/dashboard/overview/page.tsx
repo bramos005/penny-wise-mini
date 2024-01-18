@@ -56,14 +56,9 @@ export default function Overview() {
 
   return (
     <div className="flex">
-      <div  className="z-[10000000]">
+      <div className="z-[10000000]">
         <Sidebar />
       </div>
-
-      
-
-
-      
 
       <div
         data-aos="zoom-in"
@@ -78,7 +73,7 @@ export default function Overview() {
         <div>
           {!hasBudget && (
             <div
-              className={` flex font-semibold text-gray-700  text-3xl flex-col  h-[80vh] text-center  justify-center items-center fixed z-[30000] 900:w-[80vw]`}>
+              className={` flex font-semibold text-gray-700  text-3xl flex-col  h-[80vh] text-center  justify-center items-center w-[100vw] fixed z-[30000] 900:w-[80vw]`}>
               <p>Insufficient data for an overview.</p>
               <p>Please add budgets to unlock insights.</p>
             </div>

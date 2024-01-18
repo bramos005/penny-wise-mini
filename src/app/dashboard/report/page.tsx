@@ -89,7 +89,7 @@ export default function Statistics() {
 
       <div
         data-aos="zoom-in"
-        className="flex flex-col  w-screen h-[90vh] pl-7 gap-y-10 900:ml-[17rem]">
+        className="flex flex-col  w-screen h-[90vh] pl-7 gap-y-10 900:ml-[15rem]">
         <div className=" flex border-b justify-end mb-10 ml-[-2rem] py-3 mr-3">
           <NavBar></NavBar>
         </div>
