@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Logo } from "./ui-components/Logo";
 import { HomePageNav } from "./ui-components/HomePageNav";
-
+import Link from "next/link";
 export default function Home() {
   return (
     <div className="w-screen h-screen bg-white">
@@ -9,13 +9,15 @@ export default function Home() {
         <HomePageNav></HomePageNav>
       </div>
 
-
-      <div className="flex items-center justify-center h-screen"> {/* Full viewport height */}
-  <button className="w-[10rem] bg-custom-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
-    Get Started
-  </button>
-</div>
-
+      <div className="flex items-center justify-center h-screen">
+        {" "}
+        {/* Full viewport height */}
+        <Link href="dashboard/overview">
+          <button className="w-[10rem] bg-custom-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
+            Get Started
+          </button>
+        </Link>
+      </div>
 
       {/* <main className=" flex  justify-center flex-wrap   text-white gap-20 items-center mt-[10rem] sm:">
         <div className="flex flex-col   gap-5">

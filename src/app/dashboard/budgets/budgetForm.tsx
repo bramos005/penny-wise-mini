@@ -112,7 +112,7 @@ export function BudgetForm({
           id="category"
           name="category"
           required>
-          <option className="text-custom-white" value="" disabled>
+          <option className="text-custom-white" value="" disabled >
             Select A Category
           </option>
           <option value="savings&investments">Savings / Investments</option>
