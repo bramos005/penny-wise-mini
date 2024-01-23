@@ -33,7 +33,7 @@ export function BudgetTable({
     const getBudgets = async () => {
       if (user) {
         const externalId = user.id;
-        console.log(externalId);
+       
         const [newBudgets] = await fetchUtil(
           `/api/budget?externalId=${encodeURIComponent(externalId)}`
         );

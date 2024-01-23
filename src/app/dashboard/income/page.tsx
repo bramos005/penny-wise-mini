@@ -42,7 +42,7 @@ export default function Income() {
         const [retrievedIncome] = await fetchUtil(
           `/api/income?externalId=${encodeURIComponent(externalId)}`
         );
-        console.log(retrievedIncome);
+        
         setIncome(retrievedIncome.income);
       }
     };

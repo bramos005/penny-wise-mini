@@ -22,7 +22,7 @@ interface Data {
 export function IncomeVsBudget({ budgets, income, setIncome }: any) {
   const [data, setData] = useState<Data[]>([]);
   const { user } = useUser();
-  console.log(budgets);
+
 
   useEffect(() => {
     const getIncome = async () => {
@@ -31,7 +31,7 @@ export function IncomeVsBudget({ budgets, income, setIncome }: any) {
         const [retrievedIncome] = await fetchUtil(
           `/api/income?externalId=${encodeURIComponent(externalId)}`
         );
-        console.log(retrievedIncome);
+        
         setIncome(retrievedIncome.income);
       }
     };
@@ -42,7 +42,7 @@ export function IncomeVsBudget({ budgets, income, setIncome }: any) {
   useEffect(() => {
     if (income > 0) {
       const budgetAlloc = getBudget(budgets);
-      console.log(income);
+  
       setData([{ name: "Current Month", income: income, budget: budgetAlloc }]);
     }
   }, [income, budgets]);
