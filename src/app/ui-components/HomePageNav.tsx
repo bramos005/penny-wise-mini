@@ -3,7 +3,7 @@ import Image from "next/image"
 export function HomePageNav() {
 
     return (
-        <div className="flex justify-between items-center gap">
+        <div className="flex justify-between items-center ">
 
             <div className="pl-10 pt-5">
                 <Logo color={"text-custom-blue"} icon={"text-custom-blue"}></Logo>
