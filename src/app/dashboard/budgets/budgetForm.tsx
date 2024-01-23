@@ -44,6 +44,7 @@ export function BudgetForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+   
 
     if (user) {
       const externalId = user.id;

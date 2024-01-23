@@ -56,12 +56,12 @@ export default function Income() {
         <Sidebar />
       </div>
       <div
-        data-aos="zoom-in"
+       
         className="flex flex-col w-screen   p-6 900:ml-[15.5rem]  ">
-        <div className=" flex border-b justify-end ml-[-2rem]  mt-[-1rem] py-2 ">
+        <div className=" flex border-b justify-end ml-[-2rem] mr-[-.5rem] pb-[.7rem] mt-[-1rem] pt-[.3rem]  ">
           <NavBar></NavBar>
         </div>
-        <div data-aos="" className="flex flex-col   gap-y-10">
+        <div  data-aos="zoom-in" className="flex flex-col   gap-y-10">
           <div className="flex flex-col gap-2    py-6">
             <h1 className="text-3xl font-semibold text-gray-700">Income</h1>
             <p className="text-custom-gray font-semibold">Earn, Record, Grow</p>

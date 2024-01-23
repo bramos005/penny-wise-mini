@@ -27,11 +27,9 @@ export default function BudgetSetup() {
     if (isLoaded) {
       Aos.refresh();
     }
-  }, [isLoaded]);
+  }, [isLoaded,hasBudget]);
 
-  useEffect(() => {
-  
-} )
+ 
   
 
 
@@ -42,25 +40,25 @@ export default function BudgetSetup() {
         <Sidebar />
       </div>
 
-      <div data-aos="zoom-in" className="flex flex-col w-screen h-[90vh]  gap-y-10 900:ml-[17rem] ">
+      <div  className="flex flex-col w-screen h-[90vh]  gap-y-10 900:ml-[17rem] ">
  
-        <div className=" flex border-b justify-end mb-10 ml-[-2rem] py-3 mr-3 900:w-[75vw] 1280:w-[79vw] 1300:w-[80vw] 1409:w-[81vw] 1500:w-[83vw]">
+        <div className=" flex border-b mt-[.3rem] justify-end mb-10 ml-[-2rem] pt-2 pb-[.7rem] mr-3 900:w-[75vw] 1280:w-[79vw] 1300:w-[80vw] 1409:w-[81vw] 1500:w-[83vw]">
           <NavBar></NavBar>
         </div>
-        <div className="flex flex-col gap-2 ml-8   mt-[-4rem] 900:ml-0  ">
+        <div data-aos="zoom-in" className="flex flex-col gap-2 ml-8   mt-[-4rem] 900:ml-0  ">
           <h1 className="text-3xl font-semibold text-gray-700  s">Budgets</h1>
           <p className="text-custom-gray font-semibold">Plan, Track, Achieve.</p>
         </div>
-        <div className=" flex mt-[-2.5rem] gap-20 flex-wrapitems-center"></div>
+        <div data-aos="zoom-in" className=" flex mt-[-2.5rem] gap-20 flex-wrapitems-center"></div>
         <div
           className={`flex w-fit ${
             hasBudget ? " justify-center " : "h-[80vh] w-[78vw]"
           } items-center  flex-wrap gap-3 `}>
-          <div
+          <div data-aos="zoom-in"
             className={`flex flex-col gap-3  ${
               hasBudget ? "shadow-md bg-custom-white" : ""
             } justify-center items-center mb-20 rounded-xl p-5   max-h-[55rem]`}>
-            <div
+            <div  
               className={`${isActive || !hasBudget || !isLoaded ? "opacity-30" : "opacity-100"}  flex transition-all  duration-300`}>
               <BudgetTable
                 isLoaded={isLoaded}
@@ -74,9 +72,9 @@ export default function BudgetSetup() {
                 setSubmitted={setSubmitted}
               />
             </div>
-            <div
+            <div 
               className={`${
-               !isLoaded || hasBudget  ? "hidden" : "opacity-100 "
+               !isLoaded || hasBudget  ? "hidden" : " "
               } flex gap-7 flex-col justify-center items-center transition-all duration-100 text-center ease-in-out w-[93vw] 900:w-[60vw] lg:w-[70vw] xl:w-[80vw] `}>
               <h1 className=" flex text-3xl   font-semibold text-gray-700 sm: justify-center">
                 You currently have no budgets in place

@@ -98,18 +98,17 @@ export default function Statistics() {
   return (
     <div className={`flex`}>
       <div
-        className={`${isGenerating ? "pointer-events-none" : ""}  z-[10000] `}>
+        className={`  z-[10000] `}>
         <Sidebar />
       </div>
 
       <div
-        data-aos="zoom-in"
         className="flex flex-col  w-screen h-[90vh] pl-7 gap-y-10 900:ml-[15rem]">
-        <div className=" flex border-b justify-end mb-10 ml-[-2rem] py-3 mr-3">
+        <div className=" flex border-b justify-end mb-10 ml-[-2rem] mr-[1rem] py-3 ">
           <NavBar></NavBar>
         </div>
 
-        <div>
+        <div  data-aos="zoom-in">
           <div className="flex flex-col gap-2  mt-[-4rem]">
             <h1 className="text-3xl font-semibold text-gray-700 ">Report</h1>
             <p className="text-custom-gray font-semibold">
@@ -136,7 +135,7 @@ export default function Statistics() {
           <div
             className={`${
               !isGenerating ? "hidden" : ""
-            } text-xl fixed right-[37vw]  bottom-96`}>
+            } text-xl fixed right-[37vw] flex bottom-56`}>
             <p>{generatingPage}</p>
           </div>
         </div>

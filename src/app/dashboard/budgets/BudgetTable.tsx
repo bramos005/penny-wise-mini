@@ -74,7 +74,9 @@ export function BudgetTable({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: id }),
         });
+        
         setSubmitted(!submitted);
+        
       }
     } catch (err) {
       console.error(err);
@@ -82,7 +84,7 @@ export function BudgetTable({
   };
 
   return (
-    <div
+    <div 
       className={`${
         !isLoaded || !hasBudget ? "hidden" : "flex"
       }  flex-col gap-8 w-[90vw]  animate-fade-in-down sm:w-[36rem]`}>
